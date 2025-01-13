@@ -12,3 +12,77 @@
  *
  * https://refactoring.guru/es/design-patterns/builder
  */
+
+import { COLORS } from "../helpers/colors.ts";
+
+class Computer {
+  public cpu: string = "cpu - not defined";
+  public ram: string = "ram - not defined";
+  public storage: string = "storage - not defined";
+  public gpu?: string;
+
+  displayConfiguration(): void {
+    console.log(
+      `Computer configuration:
+          CPU: ${this.cpu}
+          RAM: ${this.ram}
+          Storage: ${this.storage}
+          GPU: ${this.gpu ?? "gpu - not defined"}`
+    );
+  }
+}
+
+class ComputerBuilder {
+  private computer: Computer;
+
+  constructor() {
+    this.computer = new Computer();
+  }
+
+  setCPU(cpu: string): ComputerBuilder {
+    this.computer.cpu = cpu;
+    return this;
+  }
+
+  setRAM(ram: string): ComputerBuilder {
+    this.computer.ram = ram;
+    return this;
+  }
+
+  setStorage(storage: string): ComputerBuilder {
+    this.computer.storage = storage;
+    return this;
+  }
+
+  setGPU(gpu: string): ComputerBuilder {
+    this.computer.gpu = gpu;
+    return this;
+  }
+
+  build(): Computer {
+    return this.computer;
+  }
+}
+
+function main() {
+  const basicComputer: Computer = new ComputerBuilder()
+    .setCPU("i5")
+    .setRAM("8GB")
+    .setStorage("1TB")
+    .build();
+
+  const gamingComputer: Computer = new ComputerBuilder()
+    .setCPU("i7")
+    .setRAM("16GB")
+    .setStorage("2TB")
+    .setGPU("Nvidia RTX 3080")
+    .build();
+
+  console.log("%cBasic computer:", COLORS.blue);
+  basicComputer.displayConfiguration();
+
+  console.log("%cBasic computer:", COLORS.blue);
+  gamingComputer.displayConfiguration();
+}
+
+main();
