@@ -29,6 +29,12 @@ class BeefHamburguer implements Hamburguer {
   }
 }
 
+class BeanHamburguer implements Hamburguer {
+  prepare(): void {
+    console.log("Preparing a bean hamburguer");
+  }
+}
+
 abstract class Restaurant {
   abstract createHamburguer(): Hamburguer;
 
@@ -49,3 +55,38 @@ class BeefRestaurant extends Restaurant {
     return new BeefHamburguer();
   }
 }
+
+class BeanRestaurant extends Restaurant {
+  override createHamburguer(): Hamburguer {
+    return new BeanHamburguer();
+  }
+}
+
+function main() {
+  // const chickenRestaurant = new ChickenRestaurant();
+  // chickenRestaurant.orderHamburguer();
+
+  // const beefRestaurant = new BeefRestaurant();
+  // beefRestaurant.orderHamburguer();
+
+  let restaurant: Restaurant;
+  const burguerType = prompt("What type of hamburguer do you want?");
+
+  switch (burguerType) {
+    case "chicken":
+      restaurant = new ChickenRestaurant();
+      break;
+    case "beef":
+      restaurant = new BeefRestaurant();
+      break;
+    case "bean":
+      restaurant = new BeanRestaurant();
+      break;
+    default:
+      throw new Error("Invalid hamburguer type");
+  }
+
+  restaurant.orderHamburguer();
+}
+
+main();
